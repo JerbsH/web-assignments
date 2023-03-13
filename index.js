@@ -1,3 +1,6 @@
 'use strict';
 
-console.log(":D")
+const _ = require("lodash");
+const output = _.camelCase("Foo Bar")
+
+console.log(output)
