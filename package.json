@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "express": "^4.18.2",
     "lodash": "^4.17.21"
   },
   "name": "web-assignments",
@@ -15,5 +16,8 @@
     "docs": "mkdir docs && touch docs/readme.md"
   },
   "author": "Jere",
-  "license": "ISC"
+  "license": "ISC",
+  "directories": {
+    "doc": "docs"
+  }
 }

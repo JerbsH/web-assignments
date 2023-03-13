@@ -1,8 +1,21 @@
 'use strict';
 
-const _ = require("lodash");
-const output = _.camelCase("Foo Bar")
+const express = require('express') 
+const app = express() 
+const port = 3000 
 
-console.log(output)
-console.log("testi 1")
-console.log("testi 2")
+
+app.use(express.static('public'))
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
+
+app.get("/catinfo", (req, res) => {
+	const cat = {
+	  name: "Frank",
+	  birthdate: "2010-12-25",
+	  weight: 5,
+	};
+	res.json(cat);
+  });
