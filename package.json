@@ -1,5 +1,19 @@
 {
   "dependencies": {
     "lodash": "^4.17.21"
-  }
+  },
+  "name": "web-assignments",
+  "description": "Web assignments",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  },
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test speified\" && exit 1\"",
+    "docs": "mkdir docs && touch docs/readme.md"
+  },
+  "author": "Jere",
+  "license": "ISC"
 }
