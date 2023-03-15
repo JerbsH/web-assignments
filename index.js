@@ -1,14 +1,22 @@
 'use strict';
 
-const express = require('express') 
-const app = express() 
-const port = 3000 
+const express = require('express');
+const app = express();
+const port = 3000;
 
-
-app.use(express.static('public'))
+app.use(express.static('public'));
+app.set('view engine', 'pug');
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Example app listening on port ${port}`);
+});
+
+app.get("/", (req,res) => {
+	const name = "name";
+	const age = "age";
+	const weight = "weight";
+	const content = {name, age, weight};
+	res.render('index', content);
 })
 
 app.get("/catinfo", (req, res) => {
@@ -19,3 +27,4 @@ app.get("/catinfo", (req, res) => {
 	};
 	res.json(cat);
   });
+ 

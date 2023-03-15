@@ -1,0 +1,17 @@
+//- template.pug
+
+html 
+    head 
+        title= title
+        style
+            include style.css
+    body 
+        article 
+            header
+                h2= name
+            figure 
+                img(src="./img/cat.jpg")
+            p= age 
+            p= weight 
+        script(src="./js/main.js") 
+        
