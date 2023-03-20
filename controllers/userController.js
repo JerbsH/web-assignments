@@ -22,7 +22,15 @@ const getUser = (req, res) => {
 };
 
 const postUser = (req, res) => {
-	res.send("With this endpoint you can add users.");
+	console.log(req.body);
+	const newUser = 
+	{
+		name: req.body.name,
+		email: req.body.email,
+		password: req.body.password
+	};
+	users.push(newUser);
+	res.status(201).send("Added user " + req.body.name)
 };
 
 const putUser = (req, res) => {
