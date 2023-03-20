@@ -1,18 +1,15 @@
 "use strict";
 
 const express = require("express");
-const { delCat } = require("../controllers/catController");
 const router = express.Router();
 const catController = require("../controllers/catController");
+const multer = require('multer');
+const upload = multer({dest: "uploads/"});
 
 router.get("/", catController.getCatList);
-
 router.get("/:catId", catController.getCat);
-
-router.post("/", catController.postCat);
-
+router.post("/",upload.single("cat") , catController.postCat);
 router.put("/", catController.putCat);
-
-router.delete("/", delCat);
+router.delete("/", catController.delCat);
 
 module.exports = router;

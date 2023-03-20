@@ -18,8 +18,8 @@ const getCat = (req, res) => {
 };
 
 const postCat = (req, res) => {
+	console.log("posting a cat ", req.body, req.file);
 	res.send("With this endpoint you can add cats.");
-	
 };
 
 const putCat = (req, res) => {
