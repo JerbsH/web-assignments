@@ -3,6 +3,7 @@ const userModel = require("../models/userModel");
 
 const users = userModel.users;
 
+// TODO: add DB connection and functions to userModel
 const getUserList = (req, res) => {
 	for (const user of users) {
 		delete user.password;
