@@ -7,35 +7,49 @@ const getCatList = async (req, res) => {
 		console.log(cats);
 		res.json(cats);
 	} catch (error) {
-		res.status(500).json({ error: 500, message: error.message });
+		res.status(500).json({ error: 500, message: "SQL query failed" });
 	}
 };
 
 const getCat = async (req, res) => {
-	const catId = Number(req.params.catId);
-	if (!Number.isInteger(catId)) {
-		res.status(400).json({ error: 400, message: "Invalid id" });
-		return;
-	}
-	// TODO: wrap to try-catch
-	const [cat] = await catModel.getCatById(catId);
-	console.log("getCat", cat);
-	if (cat) {
-		res.json(cat);
-	} else {
-		res.status(404).json({ message: "cat not found" });
+	try {
+		const catId = Number(req.params.catId);
+		if (!Number.isInteger(catId)) {
+			res.status(400).json({ error: 400, message: "Invalid id" });
+			return;
+		}
+		const [cat] = await catModel.getCatById(catId);
+		console.log("getCat", cat);
+		if (cat) {
+			res.json(cat);
+		} else {
+			res.status(404).json({ message: "cat not found" });
+		}
+	} catch (e) {
+		console.error("error", e.message);
+		res.status(500).json({ error: 500, message: "SQL query failed" });
 	}
 };
 
 const postCat = async (req, res) => {
-	console.log("posting a cat ", req.body, req.file);
-	// add cat details to cats array
-	const newCat = req.body;
-	newCat.filename = req.file.filename;
-	// TODO: add try-catch
-	const result = await catModel.insertCat(newCat);
-	// send correct response if upload succesful
-	res.status(201).send("New cat added!");
+	try {
+		console.log("posting a cat ", req.body, req.file);
+		const ownerId = Number(req.body.owner);
+		console.log("postCat, ownerId: " + ownerId);
+		if (!Number.isInteger(ownerId)) {
+			res.status(400).json({ error: 400, message: "Invalid id" });
+			return;
+		}
+		// add cat details to cats array
+		const newCat = req.body;
+		newCat.filename = req.file.filename;
+		const result = await catModel.insertCat(newCat);
+		// send correct response if upload succesful
+		res.status(201).send("New cat added!");
+	} catch (e) {
+		console.error("error", e.message);
+		res.status(500).json({ error: 500, message: "SQL insert cat failed" });
+	}
 };
 
 const putCat = async (req, res) => {
@@ -48,7 +62,7 @@ const putCat = async (req, res) => {
 };
 
 const delCat = async (req, res) => {
-	const id = req.params.catId
+	const id = req.params.catId;
 	console.log("deleting a cat ", id);
 	// TODO: add try-catch
 	const result = await catModel.deleteCat(id);
