@@ -68,13 +68,10 @@ const modifyCat = async (cat) => {
 const deleteCat = async (cat) => {
 	try {
 		// TODO: add sql update
+		console.log(cat);
 		const sql = `DELETE FROM wop_cat WHERE cat_id=?`;
 		const [rows] = await promisePool.query(sql, [
-			cat.name,
-			cat.weight,
-			cat.owner,
-			cat.birthdate,
-			cat.id
+			cat
 		]);
 		return rows;
 	} catch (e) {

@@ -24,7 +24,23 @@ const getUserById = async (id) => {
 	}
 };
 
+const postUser = async (user) => {
+	try {
+		const sql = `INSERT INTO wop_user VALUES (?, ?, ?, ?, 1)`;
+		const [rows] = await promisePool.query(sql, [
+			null,
+			user.name,
+			user.email,
+			user.passwd
+		]);
+		return rows;
+	} catch (e) {
+		console.error("error", e.message);
+		throw new Error("SQL insert user failed");
+	}
+};
 module.exports = {
 	getAllUsers,
 	getUserById,
+	postUser,
 };

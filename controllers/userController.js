@@ -31,24 +31,25 @@ const getUser = async (req, res) => {
 	}
 };
 
-const postUser = (req, res) => {
-	console.log(req.body);
-	const newUser = {
-		name: req.body.name,
-		email: req.body.email,
-		password: req.body.password,
-	};
-	users.push(newUser);
-	res.status(201).send("Added user " + req.body.name);
+const postUser = async (req, res) => {
+	try {
+		console.log("Posting a user ", req.body);
+		const newUser = req.body;
+		const result = await userModel.postUser(newUser);
+		res.status(201).send("New user added");
+	} catch (e) {
+		console.error("error", e.message);
+		res.status(500).json({error: 500, message: "SQL insert user failed"});
+	}
 };
 
 const putUser = (req, res) => {
 	res.send("With this endpoint you can modify users.");
 };
 
-const delUser = (req, res) => {
+const deleteUser = (req, res) => {
 	res.send("With this endpoint you can delete a user.");
 };
 
-const userController = { getUserList, getUser, postUser, putUser, delUser };
+const userController = { getUserList, getUser, postUser, putUser, deleteUser };
 module.exports = userController;

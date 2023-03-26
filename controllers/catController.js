@@ -53,22 +53,30 @@ const postCat = async (req, res) => {
 };
 
 const putCat = async (req, res) => {
-	console.log("modifying a cat ", req.body);
-	// TODO: add try-catch
-	const cat = req.body;
-	const result = await catModel.modifyCat(cat);
-	// send correct response if modify succesful
-	res.status(200).send("Cat modified!");
+	try {
+		console.log("modifying a cat ", req.body);
+		const cat = req.body;
+		const result = await catModel.modifyCat(cat);
+		// send correct response if modify succesful
+		res.status(200).send("Cat modified!");
+	} catch (e) {
+		console.error("error", e.message);
+		res.status(500).json({ error: 500, message: "SQL update cat failed" });
+	}
 };
 
-const delCat = async (req, res) => {
-	const id = req.params.catId;
-	console.log("deleting a cat ", id);
-	// TODO: add try-catch
-	const result = await catModel.deleteCat(id);
-	// send correct response if delete succesful
-	res.status(200).send("Cat deleted!");
+const deleteCat = async (req, res) => {
+	try {
+		const id = req.params.catId;
+		console.log("deleting a cat ", id);
+		const result = await catModel.deleteCat(id);
+		// send correct response if delete succesful
+		res.status(200).send("Cat deleted!");
+	} catch (e) {
+		console.error("error", e.message);
+		res.status(500).json({ error: 500, message: "SQL delete cat failed" });
+	}
 };
 
-const catController = { getCatList, getCat, postCat, putCat, delCat };
+const catController = { getCatList, getCat, postCat, putCat, deleteCat };
 module.exports = catController;
