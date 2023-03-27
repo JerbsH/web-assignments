@@ -3,8 +3,12 @@ const catModel = require("../models/catModel");
 
 const getCatList = async (req, res) => {
 	try {
-		const cats = await catModel.getAllCats();
+		let cats = await catModel.getAllCats();
 		console.log(cats);
+		cats = cats.map(cat => {
+			cat.birthdate = cat.birthdate.toISOString().split("T")[0];
+			return cat;
+		});
 		res.json(cats);
 	} catch (error) {
 		res.status(500).json({ error: 500, message: "SQL query failed" });
@@ -45,7 +49,7 @@ const postCat = async (req, res) => {
 		newCat.filename = req.file.filename;
 		const result = await catModel.insertCat(newCat);
 		// send correct response if upload succesful
-		res.status(201).send("New cat added!");
+		res.status(201).json({message: "New cat added!"});
 	} catch (e) {
 		console.error("error", e.message);
 		res.status(500).json({ error: 500, message: "SQL insert cat failed" });
@@ -58,7 +62,7 @@ const putCat = async (req, res) => {
 		const cat = req.body;
 		const result = await catModel.modifyCat(cat);
 		// send correct response if modify succesful
-		res.status(200).send("Cat modified!");
+		res.status(200).json({message: "Cat modified!"});
 	} catch (e) {
 		console.error("error", e.message);
 		res.status(500).json({ error: 500, message: "SQL update cat failed" });
@@ -71,7 +75,7 @@ const deleteCat = async (req, res) => {
 		console.log("deleting a cat ", id);
 		const result = await catModel.deleteCat(id);
 		// send correct response if delete succesful
-		res.status(200).send("Cat deleted!");
+		res.status(200).json({message: "Cat deleted!"});
 	} catch (e) {
 		console.error("error", e.message);
 		res.status(500).json({ error: 500, message: "SQL delete cat failed" });

@@ -1,7 +1,6 @@
 "use strict";
 const userModel = require("../models/userModel");
 
-// TODO: add DB connection and functions to userModel
 const getUserList = async (req, res) => {
 	try {
 		const users = await userModel.getAllUsers();
