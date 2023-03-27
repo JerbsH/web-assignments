@@ -35,7 +35,7 @@ const postUser = async (req, res) => {
 		console.log("Posting a user ", req.body);
 		const newUser = req.body;
 		const result = await userModel.postUser(newUser);
-		res.status(201).send("New user added");
+		res.status(201).json({message: "New user added"});
 	} catch (e) {
 		console.error("error", e.message);
 		res.status(500).json({error: 500, message: "SQL insert user failed"});
