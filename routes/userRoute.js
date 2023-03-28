@@ -7,17 +7,17 @@ const { body } = require("express-validator");
 
 router
 	.route("/")
-	.get(
-		body("name").isAlphanumeric().isLength({ min: 1, max: 100 }).escape().trim(),
-		body("email").isEmail(),
-		body("password").isLength({ min: 8 }),
-		userController.getUserList)
+	.get(userController.getUserList)
 	.post(
 		body("name").isAlphanumeric().isLength({ min: 1, max: 100 }).escape().trim(),
 		body("email").isEmail(),
 		body("password").isLength({ min: 8 }),
 		userController.postUser)
-	.put(userController.putUser);
+	.put(
+		body("name").isAlphanumeric().isLength({ min: 1, max: 100 }).escape().trim(),
+		body("email").isEmail(),
+		body("password").isLength({ min: 8 }),
+		userController.putUser);
 
 router
 	.route("/:userId")
