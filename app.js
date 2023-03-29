@@ -13,7 +13,7 @@ app.use((req, res, next) => {
 });
 
 // serve example-ui
-app.use(express.static("example-ui"));
+app.use("/", express.static("example-ui"));
 // serve uploaded image files
 app.use('/uploads', express.static("uploads"));
 
