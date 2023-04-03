@@ -1,6 +1,5 @@
 .idea
-.env
-
+uploads/
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
 # Logs
@@ -45,8 +44,6 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
-uploads/*
-!uploads/.gitkeep
 
 # TypeScript v1 declaration files
 typings/
