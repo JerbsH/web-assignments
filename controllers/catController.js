@@ -85,8 +85,8 @@ const putCat = async (req, res) => {
 		return;
 	}
 	try {
-	// TODO: before modifying a cat you should check that user is the owner of that cat
-	// (req.user.user_id == cat.owner) can be done in catModel!!
+		// TODO: before modifying a cat you should check that user is the owner of that cat
+		// (req.user.user_id == cat.owner) can be done in catModel!!
 		console.log('modifying a cat ', req.body);
 		const cat = req.body;
 		const result = await catModel.modifyCat(cat);

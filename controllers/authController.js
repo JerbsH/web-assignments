@@ -1,7 +1,7 @@
 'use strict';
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
-require("dotenv").config();
+require('dotenv').config();
 
 const login = (req, res) => {
 	passport.authenticate('local', { session: false }, (err, user, info) => {

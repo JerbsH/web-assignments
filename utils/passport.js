@@ -36,7 +36,7 @@ passport.use(
 			secretOrKey: process.env.JWT_SECRET,
 		},
 		async (jwtPayload, done) => {
-			// Get user data from DB using userModel 
+			// Get user data from DB using userModel
 			console.log('user from token ', jwtPayload);
 			try {
 				const user = await getUserById(jwtPayload.user_id);
