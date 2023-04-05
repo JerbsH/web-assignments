@@ -50,5 +50,9 @@ const deleteUser = (req, res) => {
 	res.send("With this endpoint you can delete a user.");
 };
 
-const userController = { getUserList, getUser, postUser, putUser, deleteUser };
+const checkToken = (req, res) => {
+  res.json({user: req.user});
+};
+
+const userController = { getUserList, getUser, postUser, putUser, deleteUser, checkToken};
 module.exports = userController;

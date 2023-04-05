@@ -1,26 +1,30 @@
-"use strict";
+'use strict';
 
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const userController = require("../controllers/userController");
-const { body } = require("express-validator");
+const userController = require('../controllers/userController');
+const { body } = require('express-validator');
 
 router
-	.route("/")
+	.route('/')
 	.get(userController.getUserList)
 	.post(
-		body("name").isAlphanumeric().isLength({ min: 1, max: 30 }).escape().trim(),
-		body("email").isEmail(),
-		body("passwd").isLength({ min: 8 }),
-		userController.postUser)
+		body('name').isAlphanumeric().isLength({ min: 1, max: 30 }).escape().trim(),
+		body('email').isEmail(),
+		body('passwd').isLength({ min: 8 }),
+		userController.postUser
+	)
 	.put(
-		body("name").isAlphanumeric().isLength({ min: 1, max: 30 }).escape().trim(),
-		body("email").isEmail(),
-		body("passwd").isLength({ min: 8 }),
-		userController.putUser);
+		body('name').isAlphanumeric().isLength({ min: 1, max: 30 }).escape().trim(),
+		body('email').isEmail(),
+		body('passwd').isLength({ min: 8 }),
+		userController.putUser
+	);
+
+router.get('/token', userController.checkToken);
 
 router
-	.route("/:userId")
+	.route('/:userId')
 	.get(userController.getUser)
 	.delete(userController.deleteUser);
 
