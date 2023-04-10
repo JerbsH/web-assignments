@@ -2,8 +2,17 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const passport = require('./utils/passport');
 const app = express();
 const port = 3000;
+
+const loggedIn = (req, res, next) => {
+	if (req.user) {
+		next();
+	} else {
+		res.redirect('/form');
+	}
+};
 
 const user = { name: 'foo', password: 'bar' };
 
@@ -14,6 +23,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
 	session({ secret: '123456789', resave: false, saveUninitialized: true })
 );
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(cookieParser());
 
 app.get('/', (req, res) => {
@@ -24,23 +35,17 @@ app.get('/', (req, res) => {
 app.get('/form', (req, res) => {
 	res.render('form');
 });
-app.get('/secret', (req, res) => {
-	if (req.session.loggedIn) {
-		res.render('secret');
-	} else {
-		res.status(403).send('You must login to see this');
-	}
+app.get("/secret", loggedIn, (req, res) => {
+  res.render("secret");
 });
-app.post('/login', (req, res) => {
-	console.log('trying to log in', req.body);
-	// dummy login
-	if (req.body.username === user.name && req.body.password === user.password) {
-		req.session.loggedIn = true;
-		res.redirect('/secret');
-	} else {
-		res.status(401).send('login failed');
-	}
-});
+app.post(
+  "/login",
+  passport.authenticate("local", { failureRedirect: "/form" }),
+  (req, res) => {
+    console.log("success");
+    res.redirect("/secret");
+  }
+);
 app.get('/logout', (req, res) => {
 	req.session.loggedIn = false;
 	res.redirect('/form');
