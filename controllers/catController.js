@@ -1,6 +1,7 @@
 'use strict';
 const catModel = require('../models/catModel');
 const { validationResult } = require('express-validator');
+const {makeThumbnail} = require('../utils/image');
 
 const getCatList = async (req, res) => {
 	try {
@@ -61,6 +62,7 @@ const postCat = async (req, res) => {
 			res.status(400).json({ error: 400, message: 'Invalid id' });
 			return;
 		}
+		await makeThumbnail(req.file.path, newCat.filename);
 		// add cat details to cats array
 		const newCat = req.body;
 		newCat.filename = req.file.filename;
